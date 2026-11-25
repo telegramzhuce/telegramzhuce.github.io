@@ -1,0 +1,94 @@
+---
+layout: default
+title: Telegram 账号价格参考 - 接码号新号老号多少钱_TG账号价格表
+description: Telegram 账号价格参考表：TG 接码号、新号、1-10 年老号价格一览。接码号 ¥3.04 起，老号 ¥22 起。帮你算清注册成本，选对号型少浪费。
+keywords: Telegram账号价格,纸飞机账号价格,TG账号多少钱,TG老号价格,TG新号价格,接码号价格,电报账号价格表,Telegram注册成本,Telegram账号价格表
+---
+
+{% assign tg = site.data.tg_products %}
+
+<section class="page-hero">
+  <h1>Telegram 账号价格参考</h1>
+  <p>接码号、新号、1-10 年老号价格一览。数据抓取于 {{ tg.updated }}，实际报价以下单页面为准。</p>
+  <div class="hero-stats">
+    <div><b>¥{{ tg.min_price }}</b><span>接码号最低参考价</span></div>
+    <div><b>¥{{ tg.max_price }}</b><span>老号最高参考价</span></div>
+    <div><b>{{ tg.total }}</b><span>账号类型总数</span></div>
+    <div><b>¥1-3</b><span>单次接码常见成本</span></div>
+  </div>
+  <a class="primary-button page-hero-cta" href="{{ site.url }}/products/">对比账号类型 <span aria-hidden="true">→</span></a>
+</section>
+
+<div class="cat-tabs">
+  <a href="#price" class="on" data-tab="all">全部（{{ tg.total }}）</a>
+  <a href="#price" data-tab="new">新号（{{ tg.new | size }}）</a>
+  <a href="#price" data-tab="old">老号（{{ tg.old | size }}）</a>
+</div>
+
+{% assign groups = "all|new|old" | split: "|" %}
+{% for g in groups %}
+  {% assign items = tg.products %}
+  {% if g == 'new' %}{% assign items = tg.new %}{% endif %}
+  {% if g == 'old' %}{% assign items = tg.old %}{% endif %}
+  <section class="plist" data-group="{{ g }}" {% if g != 'all' %}hidden{% endif %}>
+    <div class="plist-head" aria-hidden="true">
+      <span>类型</span><span>分类</span><span>参考价</span><span>库存</span><span></span>
+    </div>
+    {% for p in items %}
+    <div class="plist-row {% if p.stock == 0 %}is-out{% endif %}">
+      <div class="plist-name">
+        {% if p.code %}<span class="code-chip">{{ p.code }}</span>{% endif %}
+        <span>{{ p.title }}</span>
+      </div>
+      <div class="plist-cat">{{ p.category }}</div>
+      <div class="plist-price">¥{{ p.price_f }}</div>
+      <div class="plist-stock {{ p.stock_cls }}">
+        {% if p.stock == 0 %}缺货{% elsif p.stock <= 10 %}仅 {{ p.stock }}{% else %}{{ p.stock }}{% endif %}
+      </div>
+      <div class="plist-act">
+        {% if p.stock == 0 %}
+        <a href="#" aria-disabled="true">缺货</a>
+        {% else %}
+        <a href="{{ site.url }}/products/">看区别 <span aria-hidden="true">→</span></a>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+{% endfor %}
+
+<section class="section">
+  <div class="section-head"><h2>💡 注册成本怎么算</h2></div>
+  <div class="guide-grid">
+    <article>
+      <h3>¥3.04 是什么号？</h3>
+      <p>混合国家双向号，接码号里最便宜的档位。适合批量注册、大量收验证码的走量场景。单价低，但被注册过的概率也高，批量前务必小量测试。</p>
+    </article>
+    <article>
+      <h3>¥22 起的老号贵在哪？</h3>
+      <p>贵在「账号年龄」。注册满 1-10 年的号，风控判定稳定，不容易被限制。适合长期挂机、介意新号触发风控的场景，也免去了自己养号的时间成本。</p>
+    </article>
+    <article>
+      <h3>为什么有的档位缺货？</h3>
+      <p>小众国家档位补货不稳定，库存为 0 的档位稍后再来，或者直接选库存大的混合档。选号时优先看库存量，避免注册到一半断货。</p>
+    </article>
+    <article>
+      <h3>批量注册有阶梯价吗？</h3>
+      <p>有。批量场景（50 个以上）可联系客服谈阶梯价。建议先跑通单个注册全流程再放量，避免因操作失误造成整批浪费。</p>
+    </article>
+  </div>
+</section>
+
+<script>
+document.querySelectorAll('.cat-tabs a').forEach(function (a) {
+  a.addEventListener('click', function (e) {
+    e.preventDefault();
+    var t = a.getAttribute('data-tab');
+    document.querySelectorAll('.cat-tabs a').forEach(function (x) { x.classList.remove('on'); });
+    a.classList.add('on');
+    document.querySelectorAll('.plist[data-group]').forEach(function (s) {
+      s.hidden = (s.getAttribute('data-group') !== t);
+    });
+  });
+});
+</script>

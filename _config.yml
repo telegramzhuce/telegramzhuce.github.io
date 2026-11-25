@@ -1,0 +1,29 @@
+title: Telegram 注册教程 · 纸飞机注册指南_TG账号注册
+url: "https://telegramzhuce.github.io"
+baseurl: ""
+description: Telegram 注册教程与纸飞机账号选购指南，提供 TG 账号注册流程、手机号验证、接码平台选择、新号/老号区别、防封实务等完整指南，助你快速完成 Telegram 账号注册。
+lang: zh-CN
+markdown: kramdown
+permalink: /articles/:name/
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      image: /assets/images/tg-platform.webp
+
+exclude:
+  - README.md
+  - TG_PRODUCT_DATA.md
+  - _config.local.yml
+  - Gemfile.lock

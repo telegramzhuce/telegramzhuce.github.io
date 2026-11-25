@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'zh-CN' }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#03343c">
+
+  <title>{% if page.url == '/' %}{{ page.title }}{% else %}{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  {% if page.keywords %}<meta name="keywords" content="{{ page.keywords }}">{% endif %}
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}/feed.xml">
+
+  <!-- Favicon / 站点图标 -->
+  <!-- 单帧 16x16 ICO，防止 Bing 解码多帧 ICO 失败回退 GitHub 猫 -->
+  <link rel="icon" type="image/x-icon" href="{{ site.url }}/assets/images/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="{{ site.url }}/assets/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ site.url }}/assets/images/icon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ site.url }}/assets/images/apple-touch-icon.png">
+  <meta name="msapplication-TileImage" content="{{ site.url }}/assets/images/apple-touch-icon.png">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <meta property="og:site_name" content="{{ site.title }}">
+  {% if page.image %}{% assign og_img = page.image | replace: '.webp', '-thumb.webp' %}<meta property="og:image" content="{{ site.url }}{{ og_img }}">{% endif %}
+
+  {% if page.url == '/' %}
+  <link rel="stylesheet" href="{{ site.url }}/assets/css/{{ site.hd_css_name | default: 'hd.css' }}">
+  {% else %}
+  <link rel="stylesheet" href="{{ site.url }}/assets/css/{{ site.css_name | default: 'style.css' }}">
+  {% endif %}
+</head>
+<body class="{% if page.url == '/' %}hd-body{% endif %}">
+  <div class="citrus-scene" aria-hidden="true">
+    <div class="scene-ribbon ribbon-cyan"></div>
+    <div class="scene-ribbon ribbon-orange"></div>
+    <div class="scene-grid"></div>
+  </div>
+
+  {% if page.url == '/' %}
+  <!-- 首页：毛玻璃导航 -->
+  <header class="hd-topbar" id="hd-topbar">
+    <div class="hd-topbar-inner">
+      <a class="hd-brand" href="{{ site.url }}/" aria-label="{{ site.title }} 首页">
+        <span class="hd-brand-mark" aria-hidden="true">✈️</span>
+        <span>纸飞机注册<small> · Telegram 教程</small></span>
+      </a>
+      <nav class="hd-nav" aria-label="主导航">
+        <a href="{{ site.url }}/" class="active">首页</a>
+        <a href="{{ site.url }}/products/">账号选购</a>
+        <a href="{{ site.url }}/articles/">注册教程</a>
+        <a href="{{ site.url }}/price/">常见问题</a>
+      </nav>
+      <div class="hd-actions">
+        <a class="hd-btn hd-btn-ghost" href="{{ site.url }}/products/">全部号源</a>
+        <a class="hd-btn hd-btn-primary" href="{{ site.url }}/articles/">注册教程 ↗</a>
+      </div>
+    </div>
+  </header>
+  {% else %}
+  <!-- 内页：标准导航 -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="{{ site.url }}/" aria-label="{{ site.title }} 首页">
+        <span class="brand-logo" aria-hidden="true">✈️</span>
+        <span>纸飞机注册<span class="brand-divider">/</span><span class="brand-product">Telegram 教程</span></span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="{{ site.url }}/" {% if page.url == '/' %}class="active"{% endif %}>首页</a>
+        <a href="{{ site.url }}/products/" {% if page.url contains '/products' %}class="active"{% endif %}>账号选购</a>
+        <a href="{{ site.url }}/articles/" {% if page.url contains '/articles/' %}class="active"{% endif %}>注册教程</a>
+        <a href="{{ site.url }}/price/" {% if page.url contains '/price' %}class="active"{% endif %}>常见问题</a>
+        <a class="nav-cta" href="{{ site.url }}/articles/">注册教程 <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+  {% endif %}
+
+  <main class="page">
+    {% if page.layout == 'post' %}
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="{{ site.url }}/">首页</a> ›
+      <a href="{{ site.url }}/articles/">注册教程</a> ›
+      {% if page.category %}<a href="{% include cat_url.html cat=page.category %}">{{ page.category }}</a> ›{% endif %}
+      <span>{{ page.title | truncate: 24 }}</span>
+    </nav>
+    {% endif %}
+
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div>
+        <a class="brand" href="{{ site.url }}/">
+          <span class="brand-logo" aria-hidden="true">✈️</span>
+          <span>纸飞机注册 / Telegram 教程</span>
+        </a>
+        <p>Telegram 注册流程、接码技巧、防封要点，一站讲清楚。</p>
+        <p class="footer-note">本站为独立整理的注册指南，与 Telegram 官方无隶属或合作关系。</p>
+      </div>
+      <nav aria-label="号源">
+        <a href="{{ site.url }}/products/">账号选购</a>
+        <a href="{{ site.url }}/price/">常见问题</a>
+        <a href="{{ site.url }}/articles/">注册教程</a>
+        <span>Telegram · 电报 · 纸飞机</span>
+      </nav>
+      <nav aria-label="关于本站">
+        <a href="{{ site.url }}/articles/">新手入门</a>
+        <a href="{{ site.url }}/articles/">防封要点</a>
+        <a href="{{ site.url }}/articles/">常见问题</a>
+        <span>内容持续维护 · 欢迎纠错</span>
+      </nav>
+    </div>
+    <div class="footer-meta">
+      <span>© {{ site.time | date: '%Y' }} {{ site.title }}</span>
+      <a href="{{ site.url }}/products/">查看账号选购</a>
+    </div>
+  </footer>
+</body>
+</html>

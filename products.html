@@ -1,0 +1,105 @@
+---
+layout: default
+title: Telegram 账号类型选购指南 - 新号老号接码号区别_TG账号怎么选
+description: Telegram 账号类型选购指南：对比 TG 接码号、新号、1-10 年老号的核心区别、适用场景与价格参考，帮你按注册用途选对账号类型，少花冤枉钱。
+keywords: Telegram账号类型,Telegram新号,TG老号,TG接码号,Telegram账号区别,电报账号类型,Telegram账号怎么选,TG账号选购,Telegram账号价格,Telegram接码号价格
+---
+
+{% assign tg = site.data.tg_products %}
+
+<section class="page-hero">
+  <h1>账号类型选购指南</h1>
+  <p>接码号、新号、1-10 年老号，共 {{ tg.total }} 种类型。注册前先搞懂区别，再按用途选对号，省钱也省时间。</p>
+  <div class="hero-stats">
+    <div><b>{{ tg.total }}</b><span>账号类型</span></div>
+    <div><b>3</b><span>大类（新号/老号）</span></div>
+    <div><b>¥{{ tg.min_price }}</b><span>接码号参考价</span></div>
+    <div><b>¥{{ tg.max_price }}</b><span>老号参考价</span></div>
+  </div>
+  <a class="primary-button page-hero-cta" href="{{ site.url }}/articles/">查看注册教程 <span aria-hidden="true">→</span></a>
+</section>
+
+<div class="cat-tabs">
+  <a href="#all" class="on" data-tab="all">全部类型（{{ tg.total }}）</a>
+  <a href="#new" data-tab="new">新号（{{ tg.new | size }}）</a>
+  <a href="#old" data-tab="old">老号（{{ tg.old | size }}）</a>
+</div>
+
+{% assign groups = "all|new|old" | split: "|" %}
+{% for g in groups %}
+  {% assign items = tg.products %}
+  {% if g == 'new' %}{% assign items = tg.new %}{% endif %}
+  {% if g == 'old' %}{% assign items = tg.old %}{% endif %}
+  <section class="plist" data-group="{{ g }}" {% if g != 'all' %}hidden{% endif %}>
+    <div class="plist-head" aria-hidden="true">
+      <span>类型</span><span>分类</span><span>参考价</span><span>库存</span><span></span>
+    </div>
+    {% for p in items %}
+    <div class="plist-row {% if p.stock == 0 %}is-out{% endif %}">
+      <div class="plist-name">
+        {% if p.code %}<span class="code-chip">{{ p.code }}</span>{% endif %}
+        <span>{{ p.title }}</span>
+      </div>
+      <div class="plist-cat">{{ p.category }}</div>
+      <div class="plist-price">¥{{ p.price_f }}</div>
+      <div class="plist-stock {{ p.stock_cls }}">
+        {% if p.stock == 0 %}缺货{% elsif p.stock <= 10 %}仅 {{ p.stock }}{% else %}{{ p.stock }}{% endif %}
+      </div>
+      <div class="plist-act">
+        {% if p.stock == 0 %}
+        <a href="#" aria-disabled="true">缺货</a>
+        {% else %}
+        <a href="{{ site.url }}/articles/">看教程 <span aria-hidden="true">→</span></a>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+{% endfor %}
+
+<section class="section">
+  <div class="section-head"><h2>📌 新号 vs 老号，注册时怎么选</h2></div>
+  <div class="compare-bar">
+    <div>
+      <b>新号（接码号）· ¥3.04 起</b>
+      <span>用虚拟手机号接收验证码完成注册，适合没有实体 SIM 卡的场景。成本最低，但号码已被注册的概率高，注册前务必测试可用性。</span>
+    </div>
+    <div class="warm">
+      <b>老号（1-10 年）· ¥22 起</b>
+      <span>注册满 1 到 10 年的账号，风控阈值低，不容易刚注册就被限制。适合长期挂机、工作室养号、介意账号年龄的场景。</span>
+    </div>
+  </div>
+</section>
+
+<section class="section faq">
+  <div class="section-head"><h2>❓ 选号前先看这几个问题</h2></div>
+  <div class="faq-list">
+    <details>
+      <summary>价格为什么每天不一样？</summary>
+      <p>账号属于虚拟商品，价格随供给和需求浮动。表中价格仅作选购参考，实际以购买页面报价为准。</p>
+    </details>
+    <details>
+      <summary>批量注册有阶梯价吗？</summary>
+      <p>有。批量场景（一般 50 个以上）可咨询阶梯价。批量注册建议先跑通单号流程再放量，避免规则踩坑。</p>
+    </details>
+    <details>
+      <summary>接码号到底是什么？</summary>
+      <p>本质是一个能接收短信验证码的虚拟手机号。Telegram 注册时用它接收验证码，验证通过后这个号码就绑定在你的账号上，后续登录需要验证码时仍可能用到。</p>
+    </details>
+  </div>
+</section>
+
+<script>
+// 分类 tab 切换
+document.querySelectorAll('.cat-tabs a').forEach(function (a) {
+  a.addEventListener('click', function (e) {
+    e.preventDefault();
+    var t = a.getAttribute('data-tab');
+    document.querySelectorAll('.cat-tabs a').forEach(function (x) { x.classList.remove('on'); });
+    a.classList.add('on');
+    document.querySelectorAll('.plist[data-group]').forEach(function (s) {
+      s.hidden = (s.getAttribute('data-group') !== t);
+    });
+  });
+});
+</script>
